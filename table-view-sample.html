@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table View Sample - Launch Manager</title>
+    <link href="https://fonts.googleapis.com/css2?family=Libre+Franklin:wght@300;400;600;700;800&family=Crimson+Pro:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0A2540;
+            --accent: #FF6B35;
+            --secondary: #3A86FF;
+            --bg: #F8F9FB;
+            --surface: #FFFFFF;
+            --text: #1A1A1A;
+            --text-light: #666666;
+            --border: #E0E4E8;
+            --shadow: rgba(10, 37, 64, 0.08);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Libre Franklin', sans-serif;
+            background: var(--bg);
+            padding: 40px;
+            color: var(--text);
+        }
+        
+        .header {
+            margin-bottom: 32px;
+        }
+        
+        h1 {
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 8px;
+            font-family: 'Crimson Pro', serif;
+        }
+        
+        .subtitle {
+            color: var(--text-light);
+            font-size: 16px;
+        }
+        
+        .table-view-container {
+            background: var(--surface);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px var(--shadow);
+        }
+        
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .task-table thead {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .task-table th {
+            padding: 16px;
+            text-align: left;
+            font-weight: 700;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .task-table td {
+            padding: 16px;
+            border-bottom: 1px solid var(--border);
+        }
+        
+        .task-table tbody tr {
+            transition: all 0.2s ease;
+            cursor: pointer;
+        }
+        
+        .task-table tbody tr:hover {
+            background: var(--bg);
+        }
+        
+        .task-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+        
+        .task-tag {
+            padding: 4px 12px;
+            border-radius: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: inline-block;
+        }
+        
+        .task-tag.news { background: #E3F2FD; color: #1976D2; }
+        .task-tag.social { background: #F3E5F5; color: #7B1FA2; }
+        .task-tag.video { background: #FFF3E0; color: #E65100; }
+        .task-tag.website { background: #E8F5E9; color: #2E7D32; }
+        
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            text-align: center;
+            display: inline-block;
+        }
+        
+        .status-badge.todo { background: #F3F4F6; color: #6B7280; }
+        .status-badge.progress { background: #FEF3C7; color: #D97706; }
+        .status-badge.completed { background: #D1FAE5; color: #059669; }
+        
+        .priority-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            font-weight: 700;
+            font-size: 11px;
+        }
+        
+        .priority-high { background: #FEE2E2; color: #DC2626; }
+        .priority-medium { background: #FEF3C7; color: #D97706; }
+        .priority-low { background: #DBEAFE; color: #2563EB; }
+        
+        .list-assignee {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 11px;
+        }
+        
+        .workfront-link {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        .workfront-link:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>📑 Table View Sample</h1>
+        <p class="subtitle">Professional data-focused view for detailed reporting</p>
+    </div>
+    
+    <div class="table-view-container">
+        <table class="task-table">
+            <thead>
+                <tr>
+                    <th>Task Name</th>
+                    <th>Type</th>
+                    <th>Assignee</th>
+                    <th>Status</th>
+                    <th>Priority</th>
+                    <th>Due Date</th>
+                    <th>Workfront</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Write feature comparison blog post</strong></td>
+                    <td><span class="task-tag news">News Blog</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #667eea, #764ba2);">SK</div>
+                            <span>Sarah K.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge todo">To Do</span></td>
+                    <td><span class="priority-badge priority-high">H</span></td>
+                    <td>Feb 28, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2310</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Create product tutorial series</strong></td>
+                    <td><span class="task-tag video">Video</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">AL</div>
+                            <span>Alex L.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge todo">To Do</span></td>
+                    <td><span class="priority-badge priority-medium">M</span></td>
+                    <td>Mar 5, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2311</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Create product pricing page</strong></td>
+                    <td><span class="task-tag website">Website</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">TC</div>
+                            <span>Taylor C.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge todo">To Do</span></td>
+                    <td><span class="priority-badge priority-high">H</span></td>
+                    <td>Feb 29, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2312</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Write launch announcement blog post</strong></td>
+                    <td><span class="task-tag news">News Blog</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #667eea, #764ba2);">SK</div>
+                            <span>Sarah K.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge progress">In Progress</span></td>
+                    <td><span class="priority-badge priority-high">H</span></td>
+                    <td>Feb 25, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2301</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Create social media campaign assets</strong></td>
+                    <td><span class="task-tag social">Social Media</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c);">MJ</div>
+                            <span>Marcus J.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge progress">In Progress</span></td>
+                    <td><span class="priority-badge priority-medium">M</span></td>
+                    <td>Mar 1, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2302</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Product demo video production</strong></td>
+                    <td><span class="task-tag video">Video</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">AL</div>
+                            <span>Alex L.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge progress">In Progress</span></td>
+                    <td><span class="priority-badge priority-high">H</span></td>
+                    <td>Feb 27, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2303</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Update product landing page</strong></td>
+                    <td><span class="task-tag website">Website</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">TC</div>
+                            <span>Taylor C.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge progress">In Progress</span></td>
+                    <td><span class="priority-badge priority-medium">M</span></td>
+                    <td>Mar 3, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2304</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Press release distribution</strong></td>
+                    <td><span class="task-tag news">News Blog</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #fa709a, #fee140);">RP</div>
+                            <span>Rachel P.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge progress">In Progress</span></td>
+                    <td><span class="priority-badge priority-high">H</span></td>
+                    <td>Mar 1, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2305</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Social media content calendar</strong></td>
+                    <td><span class="task-tag social">Social Media</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #f093fb, #f5576c);">MJ</div>
+                            <span>Marcus J.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge completed">Completed</span></td>
+                    <td><span class="priority-badge priority-medium">M</span></td>
+                    <td>Feb 10, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2291</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Customer testimonial interviews</strong></td>
+                    <td><span class="task-tag video">Video</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #4facfe, #00f2fe);">AL</div>
+                            <span>Alex L.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge completed">Completed</span></td>
+                    <td><span class="priority-badge priority-low">L</span></td>
+                    <td>Feb 8, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2287</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Behind-the-scenes development story</strong></td>
+                    <td><span class="task-tag news">News Blog</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #667eea, #764ba2);">SK</div>
+                            <span>Sarah K.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge completed">Completed</span></td>
+                    <td><span class="priority-badge priority-low">L</span></td>
+                    <td>Feb 12, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2288</a></td>
+                </tr>
+                <tr>
+                    <td><strong>Update documentation portal</strong></td>
+                    <td><span class="task-tag website">Website</span></td>
+                    <td>
+                        <div class="list-assignee">
+                            <div class="avatar" style="background: linear-gradient(135deg, #43e97b, #38f9d7);">TC</div>
+                            <span>Taylor C.</span>
+                        </div>
+                    </td>
+                    <td><span class="status-badge completed">Completed</span></td>
+                    <td><span class="priority-badge priority-medium">M</span></td>
+                    <td>Feb 14, 2026</td>
+                    <td><a href="#" class="workfront-link">WF-2289</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
